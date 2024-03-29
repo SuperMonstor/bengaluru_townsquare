@@ -1,9 +1,13 @@
+import 'package:bengaluru_townsquare/firebase_options.dart';
 import 'package:bengaluru_townsquare/routes.dart';
 import 'package:bengaluru_townsquare/screens/auth/auth1_welcome.dart';
 import 'package:bengaluru_townsquare/theme/palette.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 

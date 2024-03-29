@@ -25,6 +25,11 @@ class SignUpShellState extends State<SignUpShell> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        leading: BackButton(onPressed: () {
+          Navigator.pop(context);
+        }),
+      ),
       backgroundColor: darkTheme.colorScheme.background,
       body: SafeArea(
         child: Column(
