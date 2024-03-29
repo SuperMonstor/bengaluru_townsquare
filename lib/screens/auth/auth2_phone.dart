@@ -14,12 +14,6 @@ class EnterPhoneScreen extends StatefulWidget {
 }
 
 class EnterPhoneScreenState extends State<EnterPhoneScreen> {
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   bool isButtonActive = true;
   bool isValid = false;
   final TextEditingController _controller = TextEditingController();
@@ -44,6 +38,16 @@ class EnterPhoneScreenState extends State<EnterPhoneScreen> {
             "👋 Hello again. I'm gonna need your phone number to let you in.",
         isButtonActive: true,
         buttonWidget: FullWidthWhiteButton(
-            text: "Send OTP", isActive: isButtonActive, onPressed: () {}));
+            text: "Send OTP",
+            isActive: isButtonActive,
+            onPressed: () {
+              Navigator.pushNamed(context, 'OtpVerification');
+            }));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }

@@ -49,7 +49,7 @@ class AuthTextInputState extends State<AuthTextInput> {
           fontSize: 28,
           fontWeight: FontWeight.w700,
         ),
-        prefixText: "${widget.prefixText} ",
+        prefixText: widget.prefixText != null ? "${widget.prefixText} " : "",
         prefixStyle: const TextStyle(
           color: Palette.darkGray,
           fontSize: 28,
