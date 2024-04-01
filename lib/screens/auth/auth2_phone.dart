@@ -1,6 +1,9 @@
+import 'package:bengaluru_townsquare/common/widgets/error_snackbar.dart';
+import 'package:bengaluru_townsquare/screens/auth/auth3_otp_verification.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';
+import 'package:bengaluru_townsquare/services/otp_service.dart';
 import 'package:bengaluru_townsquare/utils/validators.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +17,22 @@ class EnterPhoneScreen extends StatefulWidget {
 }
 
 class EnterPhoneScreenState extends State<EnterPhoneScreen> {
+  void onPressed() async {
+    String phoneNumber = "+91 ${_controller.text}";
+    await sendOTP(
+      phone: phoneNumber,
+      onFailure: (exception) {
+        showErrorSnackbar(
+          errorText: exception.toString(),
+          context: context,
+        );
+      },
+    );
+  }
+
   bool isButtonActive = true;
   bool isValid = false;
+  bool isLoading = false;
   final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -38,11 +55,7 @@ class EnterPhoneScreenState extends State<EnterPhoneScreen> {
             "👋 Hello again. I'm gonna need your phone number to let you in.",
         isButtonActive: true,
         buttonWidget: FullWidthWhiteButton(
-            text: "Send OTP",
-            isActive: isButtonActive,
-            onPressed: () {
-              Navigator.pushNamed(context, 'OtpVerification');
-            }));
+            text: "Send OTP", isActive: isButtonActive, onPressed: onPressed));
   }
 
   @override

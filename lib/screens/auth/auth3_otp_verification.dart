@@ -1,7 +1,13 @@
+import 'dart:developer';
+
+import 'package:bengaluru_townsquare/common/widgets/error_snackbar.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding1_name.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';
+import 'package:bengaluru_townsquare/services/otp_service.dart';
 import 'package:bengaluru_townsquare/utils/validators.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerification extends StatefulWidget {
@@ -20,7 +26,15 @@ class _OtpVerificationState extends State<OtpVerification> {
     controller.addListener(onTextChanged);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+  }
+
   final TextEditingController controller = TextEditingController();
+  Map<String, dynamic> arguments = {};
   bool isActive = true;
 
   void onTextChanged() {
@@ -56,6 +70,22 @@ class _OtpVerificationState extends State<OtpVerification> {
     );
   }
 
+  void verifyOtp() async {
+    log('Verification Id: ${arguments['verificationId']}');
+    await sendOTP(
+        phone: arguments['phoneNumber'],
+        otp: controller.text.replaceAll(' - ', ''),
+        onSuccess: (UserCredential credential) {
+          Navigator.pushNamedAndRemoveUntil(
+              context,
+              OnboardingNameScreen.idScreen,
+              ModalRoute.withName('/OnboardingNameScreen'));
+        },
+        onFailure: (Exception e) {
+          showErrorSnackbar(context: context, errorText: e.toString());
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SignUpShell(
@@ -70,7 +100,7 @@ class _OtpVerificationState extends State<OtpVerification> {
         buttonWidget: FullWidthWhiteButton(
           text: 'Next',
           isActive: isActive,
-          onPressed: () {},
+          onPressed: verifyOtp,
         ));
   }
 
