@@ -11,7 +11,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerification extends StatefulWidget {
-  const OtpVerification({super.key});
+  final String verificationId;
+  const OtpVerification({super.key, required this.verificationId});
 
   static const String idScreen = "OtpVerification";
 
@@ -29,12 +30,9 @@ class _OtpVerificationState extends State<OtpVerification> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    arguments =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
   }
 
   final TextEditingController controller = TextEditingController();
-  Map<String, dynamic> arguments = {};
   bool isActive = true;
 
   void onTextChanged() {
@@ -71,9 +69,9 @@ class _OtpVerificationState extends State<OtpVerification> {
   }
 
   void verifyOtp() async {
-    log('Verification Id: ${arguments['verificationId']}');
-    await sendOTP(
-        phone: arguments['phoneNumber'],
+    log('verificationId: ${widget.verificationId}');
+    await verifyOTP(
+        verificationId: widget.verificationId,
         otp: controller.text.replaceAll(' - ', ''),
         onSuccess: (UserCredential credential) {
           Navigator.pushNamedAndRemoveUntil(

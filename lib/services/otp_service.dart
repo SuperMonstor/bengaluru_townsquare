@@ -3,12 +3,13 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-Future<void> sendOTP({
+Future<String> sendOTP({
   required String phone,
   String? otp,
   Function(Exception exception)? onFailure,
-  Function(UserCredential credential)? onSuccess,
+  Function(String verificationId)? onSuccess,
 }) async {
+  String verificationId = '';
   await FirebaseAuth.instance.verifyPhoneNumber(
     phoneNumber: phone,
     verificationCompleted: (PhoneAuthCredential credential) async {
@@ -30,14 +31,20 @@ Future<void> sendOTP({
       throw e;
     },
     codeSent: (String verId, int? resendToken) {
-      verifyOTP(
-          verificationId: verId,
-          otp: otp!,
-          onFailure: onFailure,
-          onSuccess: onSuccess);
+      verificationId = verId;
+      if (onSuccess != null) {
+        onSuccess(verificationId);
+      }
     },
-    codeAutoRetrievalTimeout: (String verificationId) {},
+    codeAutoRetrievalTimeout: (String verificationId) {
+      final e = Exception("SMS Automatic Retrieval timed out $verificationId");
+      if (onFailure != null) {
+        onFailure(e);
+      }
+      throw e;
+    },
   );
+  return verificationId;
 }
 
 Future<void> verifyOTP(

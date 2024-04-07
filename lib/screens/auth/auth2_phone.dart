@@ -17,6 +17,19 @@ class EnterPhoneScreen extends StatefulWidget {
 }
 
 class EnterPhoneScreenState extends State<EnterPhoneScreen> {
+  bool isButtonActive = true;
+  bool isValid = false;
+  bool isLoading = false;
+  final TextEditingController _controller = TextEditingController();
+
+  void onCompleted(String verificationId) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OtpVerification(verificationId: verificationId),
+        ));
+  }
+
   void onPressed() async {
     String phoneNumber = "+91 ${_controller.text}";
     await sendOTP(
@@ -27,13 +40,10 @@ class EnterPhoneScreenState extends State<EnterPhoneScreen> {
           context: context,
         );
       },
+      onSuccess: onCompleted
     );
   }
 
-  bool isButtonActive = true;
-  bool isValid = false;
-  bool isLoading = false;
-  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return SignUpShell(

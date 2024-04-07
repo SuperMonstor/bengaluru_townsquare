@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
   EnterPhoneScreen.idScreen: (context) => const EnterPhoneScreen(),
-  OtpVerification.idScreen: (context) => const OtpVerification(),
+  OtpVerification.idScreen: (context) => const OtpVerification(
+        verificationId: '',
+      ),
   OnboardingNameScreen.idScreen: (context) => const OnboardingNameScreen(),
 };
