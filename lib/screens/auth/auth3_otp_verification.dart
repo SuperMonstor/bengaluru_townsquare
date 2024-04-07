@@ -24,7 +24,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   @override
   void initState() {
     super.initState();
-    controller.addListener(onTextChanged);
+    phoneNumberController.addListener(onTextChanged);
   }
 
   @override
@@ -32,25 +32,31 @@ class _OtpVerificationState extends State<OtpVerification> {
     super.didChangeDependencies();
   }
 
-  final TextEditingController controller = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
   bool isActive = true;
 
   void onTextChanged() {
-    final currentText = controller.text;
-    final numericText = currentText.replaceAll(RegExp(r'[^0-9]'), '');
+    final currentText = phoneNumberController.text;
+    final numericPattern = RegExp(r'[^0-9]');
+    final numericText = currentText.replaceAll(numericPattern, '');
 
-    String formattedText;
-    if (numericText.length > 6) {
-      formattedText = _formatText(numericText.substring(0, 6));
-    } else if (numericText.length > 1) {
-      formattedText = _formatText(numericText);
-    } else {
-      formattedText = numericText;
-    }
+    final formattedText = numericText.length > 6
+        ? _formatText(numericText.substring(0, 6))
+        : numericText.length > 1
+            ? _formatText(numericText)
+            : numericText;
 
     if (formattedText != currentText) {
-      _updateControllerText(formattedText);
+      _updatePhoneNumberText(formattedText);
     }
+  }
+
+  void _updatePhoneNumberText(String text) {
+    final cursorPosition = phoneNumberController.selection.base.offset;
+    phoneNumberController.value = TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: cursorPosition),
+    );
   }
 
   String _formatText(String text) {
@@ -62,7 +68,7 @@ class _OtpVerificationState extends State<OtpVerification> {
   }
 
   void _updateControllerText(String text) {
-    controller.value = TextEditingValue(
+    phoneNumberController.value = TextEditingValue(
       text: text,
       selection: TextSelection.collapsed(offset: text.length),
     );
@@ -72,7 +78,7 @@ class _OtpVerificationState extends State<OtpVerification> {
     log('verificationId: ${widget.verificationId}');
     await verifyOTP(
         verificationId: widget.verificationId,
-        otp: controller.text.replaceAll(' - ', ''),
+        otp: phoneNumberController.text.replaceAll(' - ', ''),
         onSuccess: (UserCredential credential) {
           Navigator.pushNamedAndRemoveUntil(
               context,
@@ -91,7 +97,7 @@ class _OtpVerificationState extends State<OtpVerification> {
             "An OTP was sent to your phone number. I'm sure you understand how this works by now",
         isButtonActive: true,
         childWidget: AuthTextInput(
-          controller: controller,
+          controller: phoneNumberController,
           validator: validateOTPInput,
           textAlign: TextAlign.center,
         ),
@@ -104,8 +110,8 @@ class _OtpVerificationState extends State<OtpVerification> {
 
   @override
   void dispose() {
-    controller.removeListener(onTextChanged);
-    controller.dispose();
+    phoneNumberController.removeListener(onTextChanged);
+    phoneNumberController.dispose();
     super.dispose();
   }
 }
