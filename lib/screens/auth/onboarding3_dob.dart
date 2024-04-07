@@ -1,46 +1,49 @@
-import 'package:bengaluru_townsquare/screens/auth/onboarding3_dob.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';
+import 'package:bengaluru_townsquare/utils/validators.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingNameScreen extends StatefulWidget {
-  const OnboardingNameScreen({super.key});
-  static const String idScreen = 'OnboardingNameScreen';
+class OnboardingDateOfBirthScreen extends StatefulWidget {
+  const OnboardingDateOfBirthScreen({super.key});
+  static const String idScreen = 'OnboardingDateOfBirthScreen';
 
   @override
-  State<OnboardingNameScreen> createState() => _OnboardingNameScreenState();
+  State<OnboardingDateOfBirthScreen> createState() =>
+      _OnboardingDateOfBirthScreenState();
 }
 
-class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
+class _OnboardingDateOfBirthScreenState
+    extends State<OnboardingDateOfBirthScreen> {
   bool _active = false;
+  bool showError = false;
   final TextEditingController _controller = TextEditingController();
   Map<String, dynamic> arguments = {};
 
-  bool validator(String value) {
-    if (value.length >= 3) {
-      return true;
-    } else {
-      return false;
-    }
+  @override
+  void didChangeDependencies() {
+    arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
     return SignUpShell(
         chatBubbleText:
-            "Great, now that it's out of the way, let's get to know each other better",
+            "I hope it's not impolite to ask you for your date of birth.",
+        notifyText: "You gotta be over 18 to use this app btw",
         isButtonActive: _active,
         childWidget: AuthTextInput(
           textAlign: TextAlign.center,
           controller: _controller,
-          textInputType: TextInputType.text,
-          maxLength: 32,
-          hintText: 'Your Name',
+          textInputType: TextInputType.number,
+          hintText: 'DD/MM/YYYY',
           validator: (value) {
             setState(() {
-              _active = validator(value);
+              _active = isDateOfBirthValid(value);
             });
+
             return _active;
           },
         ),
@@ -48,7 +51,7 @@ class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
             text: "Next",
             isActive: _active,
             onPressed: () {
-              arguments["name"] = _controller.text;
+              arguments["dob"] = _controller.text;
               Navigator.pushNamed(context, OnboardingDateOfBirthScreen.idScreen,
                   arguments: arguments);
             }));
