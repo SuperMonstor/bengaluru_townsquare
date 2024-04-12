@@ -13,7 +13,7 @@ class AuthTextInput extends StatefulWidget {
   final TextInputType? textInputType;
 
   const AuthTextInput({
-    Key? key,
+    super.key,
     required this.controller,
     required this.validator,
     this.hintText,
@@ -22,7 +22,7 @@ class AuthTextInput extends StatefulWidget {
     this.maxLength,
     this.textInputType = TextInputType.phone,
     this.isDigitsOnly = true,
-  }) : super(key: key);
+  });
 
   @override
   AuthTextInputState createState() => AuthTextInputState();
@@ -91,9 +91,6 @@ class AuthTextInputState extends State<AuthTextInput> {
           widget.isDigitsOnly ? [FilteringTextInputFormatter.digitsOnly] : null,
       maxLength: widget.maxLength,
       onChanged: (value) {
-        setState(() {
-          widget.controller.text = value;
-        });
         setState(() {
           isValid = widget.validator(widget.controller.text);
         });

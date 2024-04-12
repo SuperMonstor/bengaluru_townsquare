@@ -1,6 +1,10 @@
 import 'package:bengaluru_townsquare/screens/auth/auth2_phone.dart';
 import 'package:bengaluru_townsquare/screens/auth/auth3_otp_verification.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding1_name.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding2_username.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding3_dob.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding4_gender.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding5_profilePicture.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
@@ -9,4 +13,12 @@ final Map<String, WidgetBuilder> routes = {
         verificationId: '',
       ),
   OnboardingNameScreen.idScreen: (context) => const OnboardingNameScreen(),
+  OnboardingDateOfBirthScreen.idScreen: (context) =>
+      const OnboardingDateOfBirthScreen(),
+  OnboardingGenderSelectScreen.idScreen: (context) =>
+      const OnboardingGenderSelectScreen(),
+  OnboardingProfilePictureScreen.idScreen: (context) =>
+      const OnboardingProfilePictureScreen(),
+  OnboardingUsernameScreen.idScreen: (context) =>
+      const OnboardingUsernameScreen(),
 };

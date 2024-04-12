@@ -9,13 +9,13 @@ class SignUpShell extends StatefulWidget {
   final String chatBubbleText;
   final String? notifyText;
   const SignUpShell({
-    Key? key,
+    super.key,
     this.notifyText,
     required this.chatBubbleText,
     required this.isButtonActive,
     required this.childWidget,
     required this.buttonWidget,
-  }) : super(key: key);
+  });
 
   @override
   SignUpShellState createState() => SignUpShellState();
@@ -26,6 +26,7 @@ class SignUpShellState extends State<SignUpShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         leading: BackButton(onPressed: () {
           Navigator.pop(context);
         }),

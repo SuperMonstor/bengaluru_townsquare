@@ -53,8 +53,7 @@ class _OnboardingGenderSelectScreenState
           text: "Next",
           onPressed: () {
             arguments["gender"] = genders[selectedOption];
-            Navigator.pushNamed(
-                context, Onboarding.idScreen,
+            Navigator.pushNamed(context, OnboardingProfilePictureScreen.idScreen,
                 arguments: arguments);
           }),
     );

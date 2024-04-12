@@ -1,3 +1,4 @@
+import 'package:bengaluru_townsquare/screens/auth/onboarding2_username.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding3_dob.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
@@ -13,8 +14,8 @@ class OnboardingNameScreen extends StatefulWidget {
 }
 
 class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
-  bool _active = false;
-  final TextEditingController _controller = TextEditingController();
+  bool _active = true;
+  final TextEditingController nameTextController = TextEditingController();
   Map<String, dynamic> arguments = {};
 
   bool validator(String value) {
@@ -32,31 +33,28 @@ class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
             "Great, now that it's out of the way, let's get to know each other better",
         isButtonActive: _active,
         childWidget: AuthTextInput(
-          textAlign: TextAlign.center,
-          controller: _controller,
-          textInputType: TextInputType.text,
-          maxLength: 32,
-          hintText: 'Your Name',
-          validator: (value) {
-            setState(() {
-              _active = validator(value);
-            });
-            return _active;
-          },
-        ),
+            textAlign: TextAlign.center,
+            controller: nameTextController,
+            textInputType: TextInputType.name,
+            maxLength: 32,
+            hintText: 'Your Name',
+            isDigitsOnly: false,
+            validator: (String text) {
+              return true;
+            }),
         buttonWidget: FullWidthWhiteButton(
             text: "Next",
             isActive: _active,
             onPressed: () {
-              arguments["name"] = _controller.text;
-              Navigator.pushNamed(context, OnboardingDateOfBirthScreen.idScreen,
+              arguments["name"] = nameTextController.text;
+              Navigator.pushNamed(context, OnboardingUsernameScreen.idScreen,
                   arguments: arguments);
             }));
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    nameTextController.dispose();
     super.dispose();
   }
 }

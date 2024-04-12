@@ -12,7 +12,7 @@ import '../../repositories/user_repository.dart';
 class OnboardingProfilePictureScreen extends StatefulWidget {
   static const String idScreen = "OnboardingProfilePictureScreen";
 
-  const OnboardingProfilePictureScreen({Key? key}) : super(key: key);
+  const OnboardingProfilePictureScreen({super.key});
 
   @override
   State<OnboardingProfilePictureScreen> createState() =>

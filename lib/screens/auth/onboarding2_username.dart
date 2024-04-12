@@ -59,6 +59,7 @@ class _OnboardingUsernameScreenState extends State<OnboardingUsernameScreen> {
               controller: _controller,
               textInputType: TextInputType.text,
               maxLength: 32,
+              isDigitsOnly: false,
               hintText: 'Your Username',
               validator: (value) {
                 bool isValid = isUsernameValid(value);

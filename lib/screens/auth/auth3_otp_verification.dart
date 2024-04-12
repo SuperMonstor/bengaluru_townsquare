@@ -21,14 +21,10 @@ class OtpVerification extends StatefulWidget {
 }
 
 class _OtpVerificationState extends State<OtpVerification> {
-  @override
-  void initState() {
-    super.initState();
-    phoneNumberController.addListener(onTextChanged);
-  }
 
   @override
   void didChangeDependencies() {
+    phoneNumberController.addListener(onTextChanged);
     super.didChangeDependencies();
   }
 
@@ -52,10 +48,9 @@ class _OtpVerificationState extends State<OtpVerification> {
   }
 
   void _updatePhoneNumberText(String text) {
-    final cursorPosition = phoneNumberController.selection.base.offset;
     phoneNumberController.value = TextEditingValue(
       text: text,
-      selection: TextSelection.collapsed(offset: cursorPosition),
+      selection: TextSelection.collapsed(offset: text.length),
     );
   }
 
@@ -67,23 +62,14 @@ class _OtpVerificationState extends State<OtpVerification> {
         chars.last;
   }
 
-  void _updateControllerText(String text) {
-    phoneNumberController.value = TextEditingValue(
-      text: text,
-      selection: TextSelection.collapsed(offset: text.length),
-    );
-  }
-
   void verifyOtp() async {
     log('verificationId: ${widget.verificationId}');
     await verifyOTP(
         verificationId: widget.verificationId,
         otp: phoneNumberController.text.replaceAll(' - ', ''),
         onSuccess: (UserCredential credential) {
-          Navigator.pushNamedAndRemoveUntil(
-              context,
-              OnboardingNameScreen.idScreen,
-              ModalRoute.withName('/OnboardingNameScreen'));
+          Navigator.pushNamedAndRemoveUntil(context,
+              OnboardingNameScreen.idScreen, (Route<dynamic> route) => false);
         },
         onFailure: (Exception e) {
           showErrorSnackbar(context: context, errorText: e.toString());
