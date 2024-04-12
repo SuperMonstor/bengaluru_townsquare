@@ -1,3 +1,5 @@
+import 'package:bengaluru_townsquare/screens/auth/onboarding4_gender.dart';
+import 'package:bengaluru_townsquare/screens/auth/onboarding5_profilePicture.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';
@@ -17,14 +19,29 @@ class _OnboardingDateOfBirthScreenState
     extends State<OnboardingDateOfBirthScreen> {
   bool _active = false;
   bool showError = false;
-  final TextEditingController _controller = TextEditingController();
+  final TextEditingController dateTextController = TextEditingController();
   Map<String, dynamic> arguments = {};
 
   @override
   void didChangeDependencies() {
     arguments =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    dateTextController.addListener(onDobChanged);
     super.didChangeDependencies();
+  }
+
+  void onDobChanged() {
+    var text = dateTextController.text;
+
+    if (text.length == 2 && text[1] != '/') {
+      dateTextController.text = "${text.substring(0, 2)}/";
+    } else if (text.length == 5 && text[3] != '/') {
+      dateTextController.text = "${text.substring(0, 5)}/";
+    } else if (text.length > 10) {
+      dateTextController.text = text.substring(0, 10);
+    } else if (text == "/") {
+      dateTextController.clear();
+    }
   }
 
   @override
@@ -36,8 +53,8 @@ class _OnboardingDateOfBirthScreenState
         isButtonActive: _active,
         childWidget: AuthTextInput(
           textAlign: TextAlign.center,
-          controller: _controller,
-          textInputType: TextInputType.number,
+          controller: dateTextController,
+          textInputType: TextInputType.datetime,
           hintText: 'DD/MM/YYYY',
           validator: (value) {
             setState(() {
@@ -51,15 +68,16 @@ class _OnboardingDateOfBirthScreenState
             text: "Next",
             isActive: _active,
             onPressed: () {
-              arguments["dob"] = _controller.text;
-              Navigator.pushNamed(context, OnboardingDateOfBirthScreen.idScreen,
+              arguments["dob"] = dateTextController.text;
+              Navigator.pushNamed(
+                  context, OnboardingGenderSelectScreen.idScreen,
                   arguments: arguments);
             }));
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    dateTextController.dispose();
     super.dispose();
   }
 }

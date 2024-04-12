@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 class AuthTextInput extends StatefulWidget {
   final TextEditingController controller;
   final bool Function(String) validator;
-  final bool isDigitsOnly;
   final String? hintText;
   final String? prefixText;
   final TextAlign textAlign;
@@ -21,7 +20,6 @@ class AuthTextInput extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.maxLength,
     this.textInputType = TextInputType.phone,
-    this.isDigitsOnly = true,
   });
 
   @override
@@ -30,6 +28,22 @@ class AuthTextInput extends StatefulWidget {
 
 class AuthTextInputState extends State<AuthTextInput> {
   bool isValid = false;
+  bool isDigitsOnly = true;
+
+  @override
+  void initState() {
+    setIsDigitsOnly();
+    super.initState();
+  }
+
+  void setIsDigitsOnly() {
+    if (widget.textInputType == TextInputType.phone ||
+        widget.textInputType == TextInputType.number ||
+        widget.textInputType == TextInputType.datetime) {
+      isDigitsOnly = true;
+    }
+    isDigitsOnly = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +102,7 @@ class AuthTextInputState extends State<AuthTextInput> {
       ),
       keyboardType: widget.textInputType,
       inputFormatters:
-          widget.isDigitsOnly ? [FilteringTextInputFormatter.digitsOnly] : null,
+          isDigitsOnly ? [FilteringTextInputFormatter.digitsOnly] : null,
       maxLength: widget.maxLength,
       onChanged: (value) {
         setState(() {

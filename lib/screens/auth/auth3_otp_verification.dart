@@ -86,6 +86,7 @@ class _OtpVerificationState extends State<OtpVerification> {
           controller: phoneNumberController,
           validator: validateOTPInput,
           textAlign: TextAlign.center,
+          textInputType: TextInputType.number,
         ),
         buttonWidget: FullWidthWhiteButton(
           text: 'Next',

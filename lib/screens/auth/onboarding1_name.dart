@@ -30,7 +30,7 @@ class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
   Widget build(BuildContext context) {
     return SignUpShell(
         chatBubbleText:
-            "Great, now that it's out of the way, let's get to know each other better",
+            "Great, now that it's out of the way, let's get to know each other better. What's your name?",
         isButtonActive: _active,
         childWidget: AuthTextInput(
             textAlign: TextAlign.center,
@@ -38,7 +38,6 @@ class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
             textInputType: TextInputType.name,
             maxLength: 32,
             hintText: 'Your Name',
-            isDigitsOnly: false,
             validator: (String text) {
               return true;
             }),

@@ -4,10 +4,12 @@ import 'dart:io';
 import 'package:bengaluru_townsquare/repositories/file_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:bengaluru_townsquare/models/user.dart' as user_model;
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserRepository {
   Future<void> createUser({Map<String, dynamic> attributes});
   Future<bool> isUniqueUsername(String username);
+  Future<bool> isLoggedIn();
 }
 
 class FirebaseUserRepository implements UserRepository {
@@ -67,5 +69,11 @@ class FirebaseUserRepository implements UserRepository {
         .where("username", isEqualTo: username)
         .get();
     return querySnapshot.docs.isEmpty;
+  }
+
+  @override
+  Future<bool> isLoggedIn() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    return user != null;
   }
 }
