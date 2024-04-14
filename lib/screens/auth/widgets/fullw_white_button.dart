@@ -20,7 +20,7 @@ class FullWidthWhiteButton extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            foregroundColor: Palette.kBackgroundColor,
+            foregroundColor: Palette.backgroundColor,
             backgroundColor: isActive ? Palette.white : Palette.offWhite,
           ),
           child: Text(
@@ -28,7 +28,7 @@ class FullWidthWhiteButton extends StatelessWidget {
             style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Palette.kBackgroundColor),
+                color: Palette.backgroundColor),
           )),
     );
   }

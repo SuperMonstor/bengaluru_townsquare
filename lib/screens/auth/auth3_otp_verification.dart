@@ -11,24 +11,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class OtpVerification extends StatefulWidget {
-  final String verificationId;
-  const OtpVerification({super.key, required this.verificationId});
+  const OtpVerification({super.key});
 
-  static const String idScreen = "OtpVerification";
+  static const String idScreen = "OtpVerificationScreen";
 
   @override
   State<OtpVerification> createState() => _OtpVerificationState();
 }
 
 class _OtpVerificationState extends State<OtpVerification> {
-
   @override
   void didChangeDependencies() {
     phoneNumberController.addListener(onTextChanged);
+    arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     super.didChangeDependencies();
   }
 
   final TextEditingController phoneNumberController = TextEditingController();
+  Map<String, dynamic> arguments = {};
   bool isActive = true;
 
   void onTextChanged() {
@@ -63,13 +64,15 @@ class _OtpVerificationState extends State<OtpVerification> {
   }
 
   void verifyOtp() async {
-    log('verificationId: ${widget.verificationId}');
+    log('verificationId: ${arguments['verificationId']}');
     await verifyOTP(
-        verificationId: widget.verificationId,
+        verificationId: arguments['verificationId'],
         otp: phoneNumberController.text.replaceAll(' - ', ''),
         onSuccess: (UserCredential credential) {
+          arguments["auth_id"] = credential.user!.uid;
           Navigator.pushNamedAndRemoveUntil(context,
-              OnboardingNameScreen.idScreen, (Route<dynamic> route) => false);
+              OnboardingNameScreen.idScreen, (Route<dynamic> route) => false,
+              arguments: arguments);
         },
         onFailure: (Exception e) {
           showErrorSnackbar(context: context, errorText: e.toString());

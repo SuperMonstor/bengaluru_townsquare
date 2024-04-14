@@ -1,5 +1,4 @@
 import 'package:bengaluru_townsquare/screens/auth/onboarding2_username.dart';
-import 'package:bengaluru_townsquare/screens/auth/onboarding3_dob.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';
@@ -14,6 +13,13 @@ class OnboardingNameScreen extends StatefulWidget {
 }
 
 class _OnboardingNameScreenState extends State<OnboardingNameScreen> {
+  @override
+  void didChangeDependencies() {
+    arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+    super.didChangeDependencies();
+  }
+
   bool _active = true;
   final TextEditingController nameTextController = TextEditingController();
   Map<String, dynamic> arguments = {};

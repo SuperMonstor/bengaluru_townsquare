@@ -1,7 +1,10 @@
+import 'package:bengaluru_townsquare/animation/townsquare_shimmer.dart';
 import 'package:bengaluru_townsquare/firebase_options.dart';
+import 'package:bengaluru_townsquare/repositories/user_repository.dart';
 import 'package:bengaluru_townsquare/routes.dart';
 import 'package:bengaluru_townsquare/screens/auth/auth1_welcome.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding1_name.dart';
+import 'package:bengaluru_townsquare/screens/feed_screen.dart';
 import 'package:bengaluru_townsquare/theme/palette.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -34,10 +37,28 @@ class MyApp extends StatelessWidget {
           if (user == null) {
             return const AuthScreen();
           } else {
-            return const OnboardingNameScreen();
+            return FutureBuilder<bool>(
+              future: FirebaseUserRepository()
+                  .isUserDataAvailable(FirebaseAuth.instance.currentUser!.uid),
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                } else if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.data == true) {
+                    return const FeedScreen();
+                  } else {
+                    return const OnboardingNameScreen();
+                  }
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            );
           }
         } else {
-          return const CircularProgressIndicator(); // Show a loading spinner while waiting for the auth state to change
+          return const Center(
+            child: TownsquareShimmer(),
+          );
         }
       },
     );

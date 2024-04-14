@@ -1,3 +1,4 @@
+import 'package:bengaluru_townsquare/screens/auth/auth2_phone.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/blue_chat_bubble.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/theme/palette.dart';
@@ -11,7 +12,7 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          backgroundColor: Palette.kBackgroundColor,
+          backgroundColor: Palette.backgroundColor,
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,8 +52,8 @@ class AuthScreen extends StatelessWidget {
                         FullWidthWhiteButton(
                           text: 'Get Started',
                           isActive: true,
-                          onPressed: () =>
-                              Navigator.pushNamed(context, "EnterPhone"),
+                          onPressed: () => Navigator.pushNamed(
+                              context, EnterPhoneScreen.idScreen),
                         )
                       ],
                     ),

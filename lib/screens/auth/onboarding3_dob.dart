@@ -1,5 +1,4 @@
 import 'package:bengaluru_townsquare/screens/auth/onboarding4_gender.dart';
-import 'package:bengaluru_townsquare/screens/auth/onboarding5_profilePicture.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/text_input.dart';

@@ -3,25 +3,26 @@ import 'dart:io';
 
 import 'package:bengaluru_townsquare/repositories/file_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bengaluru_townsquare/models/user.dart' as user_model;
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class UserRepository {
   Future<void> createUser({Map<String, dynamic> attributes});
   Future<bool> isUniqueUsername(String username);
+  Future<bool> isUserDataAvailable(String uid);
   Future<bool> isLoggedIn();
 }
 
 class FirebaseUserRepository implements UserRepository {
   @override
   Future<void> createUser({Map<String, dynamic>? attributes}) async {
+    print(attributes.toString());
     String? imagePath;
     String? id;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;
     await firestore.collection('users').doc(attributes!["auth_id"]).set({
       'name': attributes["name"]!,
       'gender': attributes["gender"]!,
-      'phone': attributes["phone"]!,
+      'phone': attributes["phoneNumber"]!,
       'username': attributes["username"],
       'dob': attributes["dob"],
       'id': attributes["auth_id"],
@@ -75,5 +76,12 @@ class FirebaseUserRepository implements UserRepository {
   Future<bool> isLoggedIn() async {
     User? user = FirebaseAuth.instance.currentUser;
     return user != null;
+  }
+
+  @override
+  Future<bool> isUserDataAvailable(String uid) async {
+    DocumentSnapshot snapshot =
+        await FirebaseFirestore.instance.collection("users").doc(uid).get();
+    return snapshot.exists;
   }
 }

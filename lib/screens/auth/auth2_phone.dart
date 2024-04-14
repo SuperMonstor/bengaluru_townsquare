@@ -8,7 +8,7 @@ import 'package:bengaluru_townsquare/utils/validators.dart';
 import 'package:flutter/material.dart';
 
 class EnterPhoneScreen extends StatefulWidget {
-  static const String idScreen = "EnterPhone";
+  static const String idScreen = "AuthPhoneNumberScreen";
 
   const EnterPhoneScreen({super.key});
 
@@ -21,27 +21,26 @@ class EnterPhoneScreenState extends State<EnterPhoneScreen> {
   bool isValid = false;
   bool isLoading = false;
   final TextEditingController _controller = TextEditingController();
+  Map<String, dynamic> arguments = {};
 
   void onCompleted(String verificationId) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => OtpVerification(verificationId: verificationId),
-        ));
+    arguments['verificationId'] = verificationId;
+    Navigator.pushNamed(context, OtpVerification.idScreen,
+        arguments: arguments);
   }
 
   void onPressed() async {
     String phoneNumber = "+91 ${_controller.text}";
+    arguments['phoneNumber'] = phoneNumber;
     await sendOTP(
-      phone: phoneNumber,
-      onFailure: (exception) {
-        showErrorSnackbar(
-          errorText: exception.toString(),
-          context: context,
-        );
-      },
-      onSuccess: onCompleted
-    );
+        phone: phoneNumber,
+        onFailure: (exception) {
+          showErrorSnackbar(
+            errorText: exception.toString(),
+            context: context,
+          );
+        },
+        onSuccess: onCompleted);
   }
 
   @override
