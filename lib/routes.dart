@@ -5,7 +5,7 @@ import 'package:bengaluru_townsquare/screens/auth/onboarding2_username.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding3_dob.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding4_gender.dart';
 import 'package:bengaluru_townsquare/screens/auth/onboarding5_profilePicture.dart';
-import 'package:bengaluru_townsquare/screens/feed_screen.dart';
+import 'package:bengaluru_townsquare/screens/root/my_communities.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {

@@ -15,7 +15,6 @@ abstract class UserRepository {
 class FirebaseUserRepository implements UserRepository {
   @override
   Future<void> createUser({Map<String, dynamic>? attributes}) async {
-    print(attributes.toString());
     String? imagePath;
     String? id;
     final FirebaseFirestore firestore = FirebaseFirestore.instance;

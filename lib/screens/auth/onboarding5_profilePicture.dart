@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bengaluru_townsquare/common/widgets/error_snackbar.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/fullw_white_button.dart';
 import 'package:bengaluru_townsquare/screens/auth/widgets/sign_up_shell.dart';
-import 'package:bengaluru_townsquare/screens/feed_screen.dart';
+import 'package:bengaluru_townsquare/screens/root/my_communities.dart';
 import 'package:bengaluru_townsquare/theme/palette.dart';
 import 'package:bengaluru_townsquare/utils/image_utils.dart';
 import 'package:flutter/material.dart';

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class OnboardingGenderSelectScreen extends StatefulWidget {
   static const String idScreen = "OnboardingGenderSelectScreen";
 
-  const OnboardingGenderSelectScreen({Key? key}) : super(key: key);
+  const OnboardingGenderSelectScreen({super.key});
 
   @override
   State<OnboardingGenderSelectScreen> createState() =>
@@ -65,11 +65,11 @@ class GenderSelect extends StatelessWidget {
   final void Function(String) changeGen;
   final List<String>? genders;
   const GenderSelect({
-    Key? key,
+    super.key,
     required this.genders,
     required this.currentGen,
     required this.changeGen,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

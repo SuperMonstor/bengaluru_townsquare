@@ -6,11 +6,10 @@ class AuthToggleButton extends StatelessWidget {
   final void Function(String) changeGen;
   final String currentGen;
   const AuthToggleButton(
-      {Key? key,
+      {super.key,
         required this.text,
         required this.currentGen,
-        required this.changeGen})
-      : super(key: key);
+        required this.changeGen});
 
   @override
   Widget build(BuildContext context) {
