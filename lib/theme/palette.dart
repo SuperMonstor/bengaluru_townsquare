@@ -8,6 +8,7 @@ class Palette {
   static const Color boxBackground = Color(0xff1e1e1e);
   static const Color lightGray = Color(0xff969696);
   static const Color gray = Color(0xff8f8f8f);
+  static const Color darkerGray = Color(0xff757575); // nav button color
   static const Color primaryBlue = Color(0xff2d3bbd);
   static const Color secondaryBlue = Color(0xff1881fe);
   static const Color darkGray = Color(0xff686867);
